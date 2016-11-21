@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <th>Round #</th>
+            <th>|</th>
+            <th>User Action</th>
+            <th>Opponent Action</th>
+            <th>Winner</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for round in rounds %}
+            <tr class="{{ round.winner }}">
+                <td>{{ round.id }}</a></td>
+                <td> </td>
+                <td>{{ round.userAction |capitalize }}</td>
+                <td>{{ round.randomAction |capitalize }}</td>
+                <td>{{ round.winner |capitalize }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
