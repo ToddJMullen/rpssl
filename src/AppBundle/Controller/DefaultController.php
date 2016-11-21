@@ -92,7 +92,7 @@ class DefaultController extends Controller
         $rounds = $this->getDoctrine()
                     ->getManager()
                     ->getRepository('RpsslBundle:Round')->findAll();
-        
+
         $total = $this->getTotals();
 
         return $this->render('default/summary.html.twig', array(
@@ -118,9 +118,9 @@ class DefaultController extends Controller
     protected function interpretResult($result)
     {
         switch( $result ){
-            case 1: return "You won!";
-            case 0: return "It's A Tie";
-            case -1: return "You lost.";
+            case "user": return "You won!";
+            case "cat": return "It's A Tie";
+            case "other": return "You lost.";
             default:
                 throw new \InvalidArgumentException("Bermuda triangle result '$result' cannot be interpreted");
         }

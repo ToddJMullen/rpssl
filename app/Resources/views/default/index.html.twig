@@ -14,7 +14,7 @@
                 {% include( "forms/rock-paper-choices.html.twig" ) %}
 
                 {% if winner is defined %}
-                    <p class='lead well well-sm text-center'>
+                    <p class='alert alert-success col-xs-12 text-center'>
                         You Threw: &ldquo;{{ userAction |capitalize }}&rdquo; &amp;
                         Your Opponent Threw: &ldquo;{{ randomAction |capitalize }}&rdquo;
                         <br />Result: {{ winner }}
