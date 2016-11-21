@@ -65,13 +65,18 @@ class DefaultController extends Controller
 
         $rounds = $em->getRepository('RpsslBundle:Round')->findAll();
 
+        $total = $this->getTotals();
+
 
         return $this->render('default/index.html.twig', array(
             "userAction"    => $userAction,
             "randomAction"  => $randomAction,
             "winner"        => $this->interpretResult($winner),
             "rounds"        => $rounds,
-            "userWins"      => 10
+            "total"         => $total["total"],
+            "userWins"      => $total['userWins'],
+            "userLoses"     => $total['userLoses'],
+            "draws"         => $total['draws'],
         ));
     }
 
@@ -86,11 +91,16 @@ class DefaultController extends Controller
     {
         $rounds = $this->getDoctrine()
                     ->getManager()
-                    ->getRepository('RpsslBundle:Round')
-                    ->findAll();
+                    ->getRepository('RpsslBundle:Round')->findAll();
+        
+        $total = $this->getTotals();
 
         return $this->render('default/summary.html.twig', array(
-            "rounds"   => $rounds
+            "rounds"        => $rounds,
+            "total"         => $total["total"],
+            "userWins"      => $total['userWins'],
+            "userLoses"     => $total['userLoses'],
+            "draws"         => $total['draws'],
         ) );
 
     }
@@ -98,6 +108,13 @@ class DefaultController extends Controller
 
 /////private methods/////
 
+    /**
+     * Convenience function for getting a human readible version of the result.
+     *
+     * @param int $result
+     * @return string
+     * @throws \InvalidArgumentException
+     */
     protected function interpretResult($result)
     {
         switch( $result ){
@@ -107,6 +124,48 @@ class DefaultController extends Controller
             default:
                 throw new \InvalidArgumentException("Bermuda triangle result '$result' cannot be interpreted");
         }
+    }
+
+    /**
+     * Convenience function for getting an array with the total number of user wins, loses, and draws.
+     *
+     * @return array The total number of user wins, loses, and draws.
+     */
+    protected function getTotals()
+    {
+        $total = $userWins = $userLoses = $draws = 0;
+
+        $rounds = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('RpsslBundle:Round');
+
+        $qb = $rounds->createQueryBuilder('a');
+        $qb->select('COUNT(a)');
+//        $qb->where('a.valideAdmin = :valideAdmin');
+//        $qb->setParameter('valideAdmin', 1);
+        $total = $qb->getQuery()->getSingleScalarResult();
+
+        $qb->where('a.winner = :w');
+        $qb->setParameter('w', "user");
+        $userWins = $qb->getQuery()->getSingleScalarResult();
+
+        $qb->where('a.winner = :w');
+        $qb->setParameter('w', "other");
+        $userLoses = $qb->getQuery()->getSingleScalarResult();
+
+        $qb->where('a.winner = :w');
+        $qb->setParameter('w', "cat");
+        $draws = $qb->getQuery()->getSingleScalarResult();
+
+//        $total = $rounds ? sizeof($rounds) : "???";
+
+        return [
+            "total"     => $total,
+            "userWins"  => $userWins,
+            "userLoses" => $userLoses,
+            "draws"     => $draws
+        ];
+
     }
 
 

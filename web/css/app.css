@@ -12,6 +12,9 @@
     padding-bottom: 10px;
     padding-top: 0;
 }
+div#wrapper {
+  padding-bottom: 75px;
+}
 
 
 .features .glyphicon{
