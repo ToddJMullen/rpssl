@@ -91,7 +91,7 @@ class DefaultController extends Controller
     {
         $rounds = $this->getDoctrine()
                     ->getManager()
-                    ->getRepository('RpsslBundle:Round')->findAll();
+                    ->getRepository('RpsslBundle:Round')->findBy([], ['id' => 'DESC']);//findAll();
 
         $total = $this->getTotals();
 
