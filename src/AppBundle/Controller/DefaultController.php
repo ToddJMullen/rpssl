@@ -36,7 +36,7 @@ class DefaultController extends Controller
     {
 
         return $this->render('default/index.html.twig', array(
-            
+
         ));
     }
 
@@ -50,7 +50,12 @@ class DefaultController extends Controller
     {
 
         return $this->render('default/summary.html.twig', array(
-
+            "resultArray"   => array(
+                ["id"=>1,"user_action"=>"rock","random_action"=>"paper","winner"=>"computer"],
+                ["id"=>2,"user_action"=>"scissors","random_action"=>"paper","winner"=>"user"],
+                ["id"=>3,"user_action"=>"rock","random_action"=>"scissors","winner"=>"user"],
+                ["id"=>4,"user_action"=>"spock","random_action"=>"lizard","winner"=>"computer"]
+            )
         ));
     }
 

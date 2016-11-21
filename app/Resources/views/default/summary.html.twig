@@ -13,6 +13,10 @@
 
                 {% include( "forms/rock-paper-choices.html.twig" ) %}
 
+                {% for round in resultArray %}
+                    <p>{{round.id}}</p>
+                {% endfor %}
+
             </div>
         </div>
     </div>

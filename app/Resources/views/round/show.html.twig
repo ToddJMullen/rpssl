@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Round</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ round.id }}</td>
+            </tr>
+            <tr>
+                <th>Useraction</th>
+                <td>{{ round.userAction }}</td>
+            </tr>
+            <tr>
+                <th>Randomaction</th>
+                <td>{{ round.randomAction }}</td>
+            </tr>
+            <tr>
+                <th>Winner</th>
+                <td>{{ round.winner }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('round_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('round_edit', { 'id': round.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
