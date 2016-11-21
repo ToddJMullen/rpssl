@@ -2,7 +2,16 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Welcome to RPSSL!{% endblock %}</title>
+
+        <style>
+
+            .user{background-color: #5a9;}
+            .other{background-color: #a95;}
+            .cat{background-color: #ccc;}
+
+        </style>
+
         {% block stylesheets %}{% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
