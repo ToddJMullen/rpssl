@@ -5,7 +5,12 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use RpsslBundle\RpsslController;
+use RpsslBundle\Entity\Round;
 
+/**
+ * @Route("rpssl")
+ */
 class DefaultController extends Controller
 {
     /**
@@ -17,9 +22,7 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('default/index.html.twig', array(
-
-        ));
+        return $this->forward("AppBundle:Default:history");
     }
 
 
@@ -35,8 +38,39 @@ class DefaultController extends Controller
     public function duelAction(Request $request)
     {
 
-        return $this->render('default/index.html.twig', array(
+        $userAction     = $request->request->get("action");
 
+        if( !$userAction ){
+            return $this->redirectToRoute("history");
+        }
+
+        //else we have a round to execute
+        $ai = new RpsslController();
+
+        $randomAction   = $ai->getNextAction();
+
+        $winner         =  $ai->getResult($userAction, $randomAction);
+
+        //Now we have to record it
+
+        $round = new Round();
+        $round->setUserAction($userAction);
+        $round->setRandomAction($randomAction);
+        $round->setWinner($winner);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($round);
+        $em->flush($round);
+
+
+        $rounds = $em->getRepository('RpsslBundle:Round')->findAll();
+
+
+        return $this->render('default/index.html.twig', array(
+            "userAction"    => $userAction,
+            "randomAction"  => $randomAction,
+            "winner"        => $this->interpretResult($winner),
+            "rounds"        => $rounds
         ));
     }
 
@@ -44,21 +78,35 @@ class DefaultController extends Controller
     /**
      * Displays historical round results for all RPSSL players
      *
+     * @Route("/list", name="list")
      * @Route("/history", name="history")
      */
     public function historyAction(Request $request)
     {
+        $rounds = $this->getDoctrine()
+                    ->getManager()
+                    ->getRepository('RpsslBundle:Round')
+                    ->findAll();
 
         return $this->render('default/summary.html.twig', array(
-            "resultArray"   => array(
-                ["id"=>1,"user_action"=>"rock","random_action"=>"paper","winner"=>"computer"],
-                ["id"=>2,"user_action"=>"scissors","random_action"=>"paper","winner"=>"user"],
-                ["id"=>3,"user_action"=>"rock","random_action"=>"scissors","winner"=>"user"],
-                ["id"=>4,"user_action"=>"spock","random_action"=>"lizard","winner"=>"computer"]
-            )
-        ));
+            "rounds"   => $rounds
+        ) );
+
     }
 
+
+/////private methods/////
+
+    protected function interpretResult($result)
+    {
+        switch( $result ){
+            case 1: return "You won!";
+            case 0: return "It's A Tie";
+            case -1: return "You lost.";
+            default:
+                throw new \InvalidArgumentException("Bermuda triangle result '$result' cannot be interpreted");
+        }
+    }
 
 
 
