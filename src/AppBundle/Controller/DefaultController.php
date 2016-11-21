@@ -70,7 +70,8 @@ class DefaultController extends Controller
             "userAction"    => $userAction,
             "randomAction"  => $randomAction,
             "winner"        => $this->interpretResult($winner),
-            "rounds"        => $rounds
+            "rounds"        => $rounds,
+            "userWins"      => 10
         ));
     }
 

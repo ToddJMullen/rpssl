@@ -7,22 +7,18 @@
 
 {% block body %}
     <div id="wrapper">
-        <div id="container">
-            <div id="welcome">
-                <h1>Welcome to RPSSL: The Rock/Paper/Scissor/Spock/Lizard Center</h1>
-            </div>
+        <div class="container">
 
-            <div id="game">
-                <p>If you&apos;re ready to play...</p>
+            <div id="game" class=' col-xs-10 col-xs-offset-1'>
 
                 {% include( "forms/rock-paper-choices.html.twig" ) %}
 
                 {% if winner is defined %}
-                    <h2>
-                        You Threw: &ldquo;{{ userAction |capitalize }}&rdquo;
-                        <br />Your Opponent Threw: &ldquo;{{ randomAction |capitalize }}&rdquo;
+                    <p class='lead well well-sm text-center'>
+                        You Threw: &ldquo;{{ userAction |capitalize }}&rdquo; &amp;
+                        Your Opponent Threw: &ldquo;{{ randomAction |capitalize }}&rdquo;
                         <br />Result: {{ winner }}
-                    </h2>
+                    </p>
                 {% endif %}
 
                 {% if rounds is defined %}

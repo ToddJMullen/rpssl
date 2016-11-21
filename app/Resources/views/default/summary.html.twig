@@ -2,33 +2,25 @@
 
 {% block body %}
     <div id="wrapper">
-        <div id="container">
-            <div id="summary">
-                <h1>Welcome to RPSSL: The Rock/Paper/Scissor/Spock/Lizard Center</h1>
-            </div>
-            
-            {% include( "forms/rock-paper-choices.html.twig" ) %}
+        <div class="container">
+            <div class="row col-xs-10 col-xs-offset-1">
 
-            <div id="results">
+                <h3>If you&apos;re ready to play...</h3>
+                {% include( "forms/rock-paper-choices.html.twig" ) %}
 
-                {% if rounds is defined %}
-                    {% include 'round/list.html.twig' %}
+                <div id="results">
 
-                {% else %}
+                    {% if rounds is defined %}
+                        {% include 'round/list.html.twig' %}
 
-                    <h2>There is no RPSSL History To Show Yet</h2>
-                {% endif %}
+                    {% else %}
+
+                        <h2>There is no RPSSL History To Show Yet</h2>
+                    {% endif %}
 
 
+                </div>
             </div>
         </div>
     </div>
-{% endblock %}
-
-{% block stylesheets %}
-<style>
-
-    /* no styles yet */
-
-</style>
 {% endblock %}

@@ -1,0 +1,24 @@
+/***********************
+ *	Imaginus.org ©2016
+ *
+ *	Author		: Todd Mullen
+ *	Document	: app.css
+ *	Created		: Nov 19, 2016, 12:01:02 PM
+ *	Description	:
+ *		Styles
+ ***********************/
+
+.navbar-header{
+    padding-bottom: 10px;
+    padding-top: 0;
+}
+
+
+.features .glyphicon{
+    font-size: 32px;
+    color: blue;
+}
+
+.footer{
+    color: white;
+}

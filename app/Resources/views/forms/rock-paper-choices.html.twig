@@ -1,11 +1,13 @@
-<form action="{{ path('duel') }}" method="post">
-    <fieldset>
-        <legend>Choose your next action:</legend>
+<div class="well well-lg col-xs-12">
+    <form action="{{ path('duel') }}" method="post">
+        <fieldset class=''>
+            <legend>Choose your next action:</legend>
 
-            <input type="submit" name="action" value="Rock"> |
-            <input type="submit" name="action" value="Paper"> |
-            <input type="submit" name="action" value="Scissors"> |
-            <input type="submit" name="action" value="Spock"> |
-            <input type="submit" name="action" value="Lizard">
-    </fieldset>
-</form>
+            <input class="btn btn-primary" type="submit" name="action" value="Rock" >
+            <input class="btn btn-primary" type="submit" name="action" value="Paper">
+            <input class="btn btn-primary" type="submit" name="action" value="Scissors">
+            <input class="btn btn-primary" type="submit" name="action" value="Spock">
+            <input class="btn btn-primary" type="submit" name="action" value="Lizard">
+        </fieldset>
+    </form>
+</div>
