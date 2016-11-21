@@ -6,16 +6,19 @@
             <div id="summary">
                 <h1>Welcome to RPSSL: The Rock/Paper/Scissor/Spock/Lizard Center</h1>
             </div>
+            
+            {% include( "forms/rock-paper-choices.html.twig" ) %}
 
             <div id="results">
 
-                <p>Insert history here...</p>
+                {% if rounds is defined %}
+                    {% include 'round/list.html.twig' %}
 
-                {% include( "forms/rock-paper-choices.html.twig" ) %}
+                {% else %}
 
-                {% for round in resultArray %}
-                    <p>{{round.id}}</p>
-                {% endfor %}
+                    <h2>There is no RPSSL History To Show Yet</h2>
+                {% endif %}
+
 
             </div>
         </div>
