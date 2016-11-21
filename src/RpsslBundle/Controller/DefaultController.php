@@ -8,10 +8,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 class DefaultController extends Controller
 {
     /**
-     * @Route("/")
+     * @deprecated since version 0.2
+     * Left for future use
      */
     public function indexAction()
     {
-        return $this->render('RpsslBundle:Default:index.html.twig');
+        return $this->redirectToRoute("/");
     }
 }
