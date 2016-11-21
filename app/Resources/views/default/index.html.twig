@@ -1,5 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ parent() }}
+    Are you ready to Duel?
+{% endblock %}
+
 {% block body %}
     <div id="wrapper">
         <div id="container">
@@ -9,18 +14,23 @@
 
             <div id="game">
                 <p>If you&apos;re ready to play...</p>
-                
+
                 {% include( "forms/rock-paper-choices.html.twig" ) %}
+
+                {% if winner is defined %}
+                    <h2>
+                        You Threw: &ldquo;{{ userAction |capitalize }}&rdquo;
+                        <br />Your Opponent Threw: &ldquo;{{ randomAction |capitalize }}&rdquo;
+                        <br />Result: {{ winner }}
+                    </h2>
+                {% endif %}
+
+                {% if rounds is defined %}
+                    {% include( "round/list.html.twig" ) %}
+                {% endif %}
 
             </div>
         </div>
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-<style>
-
-    /* no styles yet */
-
-</style>
-{% endblock %}
